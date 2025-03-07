@@ -76,7 +76,7 @@ class BenchmarckTest {
         assert(c.verifyRapidSnark())
 
         // print out the results
-        println("*** ARKWORKS proving time: $provingTimeArkworks ms ***")
-        println("*** RAPIDSNARK proving time: $provingTimeRapidSnark ms ***")
+        println("*** keccak256 ARKWORKS proving time: $provingTimeArkworks ms ***")
+        println("*** keccak256 RAPIDSNARK proving time: $provingTimeRapidSnark ms ***")
     }
 }
