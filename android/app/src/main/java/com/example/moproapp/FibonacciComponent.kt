@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import uniffi.mopro.GenerateProofResult
@@ -30,9 +31,10 @@ fun FibonacciComponent() {
         )
     }
 
-    val srsPath = getFilePathFromAssets("plonk_fibonacci_srs.bin")
-    val provingKeyPath = getFilePathFromAssets("plonk_fibonacci_pk.bin")
-    val verifyingKeyPath = getFilePathFromAssets("plonk_fibonacci_vk.bin")
+    val context = LocalContext.current
+    val srsPath = getFilePathFromAssets(context, "plonk_fibonacci_srs.bin")
+    val provingKeyPath = getFilePathFromAssets(context, "plonk_fibonacci_pk.bin")
+    val verifyingKeyPath = getFilePathFromAssets(context, "plonk_fibonacci_vk.bin")
 
 
     val inputs = mutableMapOf<String, List<String>>()

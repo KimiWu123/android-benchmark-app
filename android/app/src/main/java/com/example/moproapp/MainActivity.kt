@@ -1,6 +1,7 @@
 package com.example.moproapp
 
 import MultiplierComponent
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,16 +29,12 @@ fun copyFile(inputStream: InputStream, outputStream: OutputStream) {
     }
 }
 
-@Composable
-fun getFilePathFromAssets(name: String): String {
-    val context = LocalContext.current
-    return remember {
-        val assetManager = context.assets
-        val inputStream = assetManager.open(name)
-        val file = File(context.filesDir, name)
-        copyFile(inputStream, file.outputStream())
-        file.absolutePath
-    }
+fun getFilePathFromAssets(context: Context, name: String): String {
+    val assetManager = context.assets
+    val inputStream = assetManager.open(name)
+    val file = File(context.filesDir, name)
+    copyFile(inputStream, file.outputStream())
+    return file.absolutePath
 }
 
 class MainActivity : ComponentActivity() {
