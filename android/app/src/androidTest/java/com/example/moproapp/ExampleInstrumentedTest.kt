@@ -30,21 +30,11 @@ class BenchmarckTest {
         val keccak256Inputs = getKeccak256Inputs()
         val circuitPath = getFilePathFromAssets(context,  "keccak256_256_test.dat")
         val inputJsonPath = getFilePathFromAssets(context,  "keccak256.json")
+
         // prepare rapidsnark inputs
         val rapidsnarkInputs = prepareCircuitInputs(
             circuitPath,
             inputJsonPath,
-        )
-        val zkpTools = ZKPTools(context)
-        zkpTools.witnesscalcKeccak256_256_test(
-            rapidsnarkInputs.circuitBuffer,
-            rapidsnarkInputs.circuitSize,
-            rapidsnarkInputs.jsonBuffer,
-            rapidsnarkInputs.jsonSize,
-            rapidsnarkInputs.wtnsBuffer,
-            rapidsnarkInputs.wtnsSize,
-            rapidsnarkInputs.errorMsg,
-            rapidsnarkInputs.errorMsgMaxSize
         )
 
         // Init Circuit object

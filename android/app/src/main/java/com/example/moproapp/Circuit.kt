@@ -9,10 +9,11 @@ import uniffi.mopro.generateCircomProof
 import uniffi.mopro.verifyCircomProof
 
 
-class Circuit(zkeyFile:String, vkeyFile:String, _rapidsnarkInputs: CircuitInputs, _rawIntpus:MutableMap<String, List<String>>, context: Context) {
+class Circuit(zkeyFile:String, vkeyFile:String, _rapidsnarkInputs: CircuitInputs, _rawIntpus:MutableMap<String, List<String>>, _context: Context) {
 
     var zkeyPath:String = ""
     var vkeyPath:String = ""
+    lateinit var context: Context
     lateinit var rapidsnarkInputs: CircuitInputs
     lateinit var rawInputs: MutableMap<String, List<String>>
     // proof result
@@ -20,6 +21,7 @@ class Circuit(zkeyFile:String, vkeyFile:String, _rapidsnarkInputs: CircuitInputs
     lateinit var arkworksProof: GenerateProofResult
 
     init {
+        context = _context
         zkeyPath = getFilePathFromAssets(context,zkeyFile)
         vkeyPath = getFilePathFromAssets(context,vkeyFile)
         rapidsnarkInputs = _rapidsnarkInputs
@@ -27,6 +29,18 @@ class Circuit(zkeyFile:String, vkeyFile:String, _rapidsnarkInputs: CircuitInputs
     }
 
     fun proveRapidSnark() {
+        val zkpTools = ZKPTools(context)
+        zkpTools.witnesscalcKeccak256_256_test(
+            rapidsnarkInputs.circuitBuffer,
+            rapidsnarkInputs.circuitSize,
+            rapidsnarkInputs.jsonBuffer,
+            rapidsnarkInputs.jsonSize,
+            rapidsnarkInputs.wtnsBuffer,
+            rapidsnarkInputs.wtnsSize,
+            rapidsnarkInputs.errorMsg,
+            rapidsnarkInputs.errorMsgMaxSize
+        )
+
         rapidsnarkProof = groth16Prove(
             zkeyPath,
             rapidsnarkInputs.wtnsBuffer
